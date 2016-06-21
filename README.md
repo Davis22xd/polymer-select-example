@@ -1,7 +1,7 @@
 <<<<<<< HEAD
 # \<direction-type-select\>
 
-example element usign drop-down-menu
+example element usign drop-down-menu from Polymer
 
 ## Install the Polymer-CLI
 

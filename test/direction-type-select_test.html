@@ -1,32 +1,55 @@
 <!doctype html>
 
 <html>
-  <head>
+<head>
     <title>direction-type-select test</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <script src="../../web-component-tester/browser.js"></script>
+    <script src="../app/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="../app/bower_components/web-component-tester/browser.js"></script>
 
     <link rel="import" href="../direction-type-select.html">
-  </head>
-  <body>
+</head>
+<body>
 
-    <test-fixture id="basic">
-      <template>
+<test-fixture id="basic">
+    <template>
         <direction-type-select></direction-type-select>
-      </template>
-    </test-fixture>
+    </template>
+</test-fixture>
 
-    <script>
-      suite('direction-type-select', function() {
+<script>
+    var nullError = " no debe ser null";
+    var definedError = " debe estar definido";
+
+    suite('direction-type-select', function() {
 
         test('instantiating the element works', function() {
-          let element = fixture('basic');
-          assert.equal(element.is, 'direction-type-select');
+            let element = fixture('basic');
+            assert.equal(element.is, 'direction-type-select');
         });
 
-      });
-    </script>
-  </body>
+        test('setting 2 for option', function() {
+            let element = fixture('basic');
+            element.option = 2;
+            assert.isNotNull(element.types, 'La lista de tipos ' + nullError);
+            assert.isDefined(element.types, 'La lista de tipos ' + definedError);
+
+            expect(element.types.length).to.equal(3);
+
+        });
+
+        test('setting 1 for option', function() {
+            let element = fixture('basic');
+            element.option = 1;
+            assert.isNotNull(element.types, 'La lista de tipos ' + nullError);
+            assert.isDefined(element.types, 'La lista de tipos ' + definedError);
+
+            expect(element.types.length).to.equal(2);
+
+        });
+
+    });
+</script>
+</body>
 </html>
