@@ -1,0 +1,104 @@
+<!--
+coding: utf-8
+Copyright (C) 2015 Sumitrag (www.sumitrag.com)
+Developer: David Proaño <davisxdpfr@gmail.com>
+-->
+<link rel="import" href="../app/bower_components/iron-form-element-behavior/iron-form-element-behavior.html">
+<link rel="import" href="../app/bower_components/iron-validatable-behavior/iron-validatable-behavior.html">
+<script>
+    SelectBehavior = {
+
+        properties: {
+            selected: {
+                type: Object,
+                observer:'setSelectedId'
+            },
+            selectedId: {
+                type:Number,
+                observer:'setSelected',
+                notify:true
+            },
+            errorMessage:{
+                type:String,
+                value:"El campo es obligatorio"
+            },
+            idToSelect:Number
+        },
+
+//    observers:['updateState(invalid)'],
+
+        ready: function () {
+            this.$.dropdownpaper.label= (this.required) ? this.$.dropdownpaper.label +" *" : this.$.dropdownpaper.label;
+        },
+
+        selectItemfromNodes: function(nodes){
+            this.$.papermenu.select(null);
+            for(index in nodes){
+                if(nodes[index].id== this.selectedId){
+//                var index = this.$.papermenu.indexOf(nodes[index]);
+                    this.$.papermenu.select(index);
+                }
+            }
+        },
+
+        paperMenuObserver: function(info){
+            if(this.selectedId!=0){
+                var nodes =info.addedNodes.filter(function(node){
+                            return(node.tagName=="PAPER-ITEM");
+                        }
+                );
+                if(nodes){
+                    this.selectItemfromNodes(nodes);
+                }
+            }
+        },
+
+        _getValidity: function(){
+            if(this.required){
+                if(this.selectedId==0 || this.selectedId== undefined ){
+                    this.$.paperError.update({invalid:true});
+                    return false;
+                }
+                else {
+                    return true;
+                }
+            }
+            else{
+                return false;
+            }
+        },
+
+        showErrorEdition: function(){
+            this.errorMessage = "Escoja un elemento para poder editar";
+            this.invalid=true;
+        },
+
+        closeErrorEdition: function(){
+            this.errorMessage = "El campo es obligatorio";
+            this.invalid=false;
+        },
+
+        setSelected: function() {
+            var boundHandler = this.paperMenuObserver.bind(this);
+            this._observer = Polymer.dom(this.$.papermenu).observeNodes(boundHandler);
+        },
+
+        setSelectedId: function(){
+            if(this.selected!=undefined){
+                this.selectedId =this.selected.id;
+                this.fire('set-selected-from-inline',{'selected':this.selectedId});
+            };
+        },
+
+        reload: function(id){
+            this.idToSelect=0;
+            if(id){
+                this.idToSelect =id;
+            }
+            this.retrieve(this.resource);
+        }
+
+    };
+
+    SelectBehavior = [ Polymer.IronFormElementBehavior,  Polymer.IronValidatableBehavior, SelectBehavior]
+</script>

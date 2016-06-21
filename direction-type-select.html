@@ -1,0 +1,98 @@
+<!--
+coding: utf-8
+Copyright (C) 2015 Sumitrag (www.sumitrag.com)
+Developer: David Proaño <davisxdpfr@gmail.com>
+-->
+<link rel="import" href="/behaviors/select-behavior.html">
+<link rel="import" href="../app/bower_components/paper-menu/paper-menu.html">
+<link rel="import" href="../app/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="../app/bower_components/paper-item/paper-item.html">
+<!--direction types form, this element is going to be filled with all the information about the entities -->
+<dom-module id="direction-type-select">
+
+  <template>
+    <style is="custom-style">
+      :host {
+        display: block;
+      }
+      .container {
+        @apply(--layout-vertical-reverse);
+      }
+      .flexchild {
+        @apply(--layout-flex);
+      }
+
+      paper-input-error{
+        position: relative;
+      }
+
+    </style>
+    <div class="container">
+      <paper-dropdown-menu class="flexchild" label="Tipo" id="dropdownpaper" selected-item="{{selected}}"
+                           required="[[required]]" error-message="[[errorMessage]]">
+        <paper-menu class="dropdown-content" id="papermenu">
+          <template is="dom-repeat" items="{{types}}" id="tmpList" >
+            <paper-item id="{{ item.number }}">{{ item.type }}</paper-item>
+          </template>
+        </paper-menu>
+      </paper-dropdown-menu>
+    </div>
+  </template>
+
+  <script>
+    (function () {
+      Polymer({
+        is: 'direction-type-select',
+        behaviors: [SelectBehavior],
+
+        properties: {
+
+          paperDisable:{
+            type:Boolean,
+            value:false
+          },
+
+          option:{
+            type:Number,
+            observer:'setTypes',
+            notify:true
+          },
+
+          types: {
+            type: Array
+          }
+        },
+
+        setTypes: function(){
+          switch(this.option) {
+            case 1:
+              this.types =[{"type":"PARADA","number":1},
+                {"type":"OFICINA","number":2}
+              ];
+              break;
+            case 2:
+              this.types =[{"type":"OFICINA","number":2},
+                {"type":"CASA","number":3},
+                {"type":"OTROS","number":4}
+              ];
+              break;
+            case 3:
+              this.types =[{"type":"CASA","number":3}
+              ];
+
+              break;
+
+            default:
+              this.types =[{"type":"PARADA","number":1},
+                {"type":"OFICINA","number":2},
+                {"type":"CASA","number":3},
+                {"type":"OTROS","number":4}
+              ];
+          }
+        }
+      });
+    })();
+
+  </script>
+
+</dom-module>
