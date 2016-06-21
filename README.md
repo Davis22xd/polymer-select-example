@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # \<direction-type-select\>
 
 example element usign drop-down-menu
@@ -36,3 +37,7 @@ $ polymer test
 ```
 
 Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
+=======
+# polymer-select-example
+Select element example using a polymer dropdrown-menu
+>>>>>>> 6cb89cbf56dbcbc430359ab578e14da83d3add77
